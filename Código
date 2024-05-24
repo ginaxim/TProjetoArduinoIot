@@ -1,4 +1,6 @@
 // Codigo apenas com sensor, led e display lcd i2c, faltando o esp32 //
+// um problema a resolver é que no simulador a led acende mesmo na frente dele dependendo da distancia, algo que so vai dar pra resolver de forma correta na montagem do prototipo //
+
 
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
