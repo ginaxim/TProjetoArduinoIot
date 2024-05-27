@@ -1,11 +1,5 @@
-// Codigo apenas com sensor, led e display lcd i2c, faltando o esp32 //
+// Codigo apenas com sensor, led, faltando o esp32 e lcd i2c //
 // um problema a resolver é que no simulador a led acende mesmo na frente dele dependendo da distancia, algo que so vai dar pra resolver de forma correta na montagem do prototipo //
-
-
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
-
-LiquidCrystal_I2C lcd(0x27, 16, 2)
 
 const int trigPin = 4;
 const int echoPin = 3;
@@ -17,10 +11,6 @@ void setup() {
   pinMode(ledPin, OUTPUT);
 
 Serial.begin(9600);
-
-  lcd.begin(16, 2);
-  lcd.backlight();
-  lcd.clear();
 
 void loop() {
   long duration;
@@ -37,12 +27,8 @@ void loop() {
 
 if (distance > 100) {
     digitalWrite(ledPin, HIGH);
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Reposição necessária");
   } else {
     digitalWrite(ledPin, LOW);
-    lcd.clear();
   }
   delay(100);
 }
