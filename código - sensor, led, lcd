@@ -1,6 +1,4 @@
 // Codigo apenas com sensor, led, e lcd i2c, faltando o esp32 //
-// um problema a resolver é que no simulador a led acende mesmo na frente dele dependendo da distancia, algo que so vai dar pra resolver de forma correta na montagem do prototipo //
-
 
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
@@ -11,6 +9,8 @@ const int trigPin = 4;
 const int echoPin = 3;
 const int ledPin = 5;
 
+bool flag = false;
+
 void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
@@ -18,10 +18,10 @@ void setup() {
 
   Serial.begin(9600);
 
-  Wire.begin(); // Inicia a comunicação I2C
-  lcd.begin(16, 2); // Inicializa o LCD com 16 colunas e 2 linhas
-  lcd.backlight(); // Liga a luz de fundo do LCD
-  lcd.clear(); // Limpa o conteúdo do LCD
+  Wire.begin();
+  lcd.begin(16, 2);
+  lcd.backlight(); 
+  lcd.clear(); 
 
   Serial.println("Setup completo");
 }
@@ -46,9 +46,15 @@ void loop() {
     lcd.print("Reposicao");
     lcd.setCursor(0, 1);
     lcd.print("Necessaria");
+    if (!flag) {
+      Serial.println("LED acesa. Enviando mensagem...");
+      flag = true;
+      // Aqui você pode adicionar a função para enviar a mensagem
+    }
   } else {
     digitalWrite(ledPin, LOW);
     lcd.clear();
+    flag = false;
   }
-  delay(100); // Pequena pausa para estabilidade visual
+  delay(100); 
 }
