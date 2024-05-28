@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-LiquidCrystal_I2C lcd(0x27, 16, 2)
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 const int trigPin = 4;
 const int echoPin = 3;
@@ -16,11 +16,15 @@ void setup() {
   pinMode(echoPin, INPUT);
   pinMode(ledPin, OUTPUT);
 
-Serial.begin(9600);
+  Serial.begin(9600);
 
-  lcd.begin(16, 2);
-  lcd.backlight();
-  lcd.clear();
+  Wire.begin(); // Inicia a comunicação I2C
+  lcd.begin(16, 2); // Inicializa o LCD com 16 colunas e 2 linhas
+  lcd.backlight(); // Liga a luz de fundo do LCD
+  lcd.clear(); // Limpa o conteúdo do LCD
+
+  Serial.println("Setup completo");
+}
 
 void loop() {
   long duration;
@@ -32,17 +36,19 @@ void loop() {
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
 
- duration = pulseIn(echoPin, HIGH);
+  duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
 
-if (distance > 100) {
+  if (distance > 100) {
     digitalWrite(ledPin, HIGH);
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("Reposição necessária");
+    lcd.print("Reposicao");
+    lcd.setCursor(0, 1);
+    lcd.print("Necessaria");
   } else {
     digitalWrite(ledPin, LOW);
     lcd.clear();
   }
-  delay(100);
+  delay(100); // Pequena pausa para estabilidade visual
 }
