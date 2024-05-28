@@ -14,10 +14,10 @@ const int sensorPin = 2; // Defina o pino do sensor, caso necessário
 const char* ssid = "nome da rede wifi";
 const char* password = "senha da rede wifi";
 
-bool flag = 1;
-
 String phoneNumber = "+5521Numero";
 String apiKey = "recebido no wpp";
+
+bool flag = true;
 
 void sendMessage(String message) {
   String url = "https://api.callmebot.com/whatsapp.php?phone=" + phoneNumber + "&apikey=" + apiKey + "&text=" + urlEncode(message);
@@ -77,15 +77,17 @@ void loop() {
     digitalWrite(ledPin, HIGH);
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("Reposição necessária");
+    lcd.print("Reposicao");
+    lcd.setCursor(0, 1);
+    lcd.print("Necessaria");
     if (flag) {
       sendMessage("Atenção! Reposição de estoque necessária.");
-      flag = 0;
+      flag = false;
     }
   } else {
     digitalWrite(ledPin, LOW);
     lcd.clear();
-    flag = 1;
+    flag = true;
   }
   delay(100);
 }
