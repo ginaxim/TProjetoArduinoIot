@@ -1,4 +1,4 @@
-Projeto de Aplicação de Cloud, IoT e Indústria 4.0 em Python, disciplina de extensão cursada no 3º período do curso de Análise e Desenvolvimento de Sistemas, na UNESA.
+## Projeto de Aplicação de Cloud, IoT e Indústria 4.0 em Python, disciplina de extensão cursada no 3º período do curso de Análise e Desenvolvimento de Sistemas, na UNESA.
 
 • O objetivo do projeto é o desenvolvimento de um protótipo em Arduino, que deve automatizar o trabalho de uma determinada parte interessada. 
 
