@@ -1,27 +1,9 @@
 // Codigo apenas com sensor, led, e lcd i2c, faltando o esp32 //
 
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
-
-LiquidCrystal_I2C lcd(0x27, 16, 2);
-
-const int trigPin = 4;
-const int echoPin = 3;
-const int ledPin = 5;
-
-bool flag = false;
-
-void setup() {
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-  pinMode(ledPin, OUTPUT);
-
-  Serial.begin(9600);
-
-  Wire.begin();
+Wire.begin();
   lcd.begin(16, 2);
-  lcd.backlight(); 
-  lcd.clear(); 
+  lcd.backlight();
+  lcd.clear();
 
   Serial.println("Setup completo");
 }
@@ -37,7 +19,7 @@ void loop() {
   digitalWrite(trigPin, LOW);
 
   duration = pulseIn(echoPin, HIGH);
-  distance = duration * 0.034 / 2;
+  distance = (duration / 2) / 29.1;
 
   if (distance > 100) {
     digitalWrite(ledPin, HIGH);
@@ -52,8 +34,4 @@ void loop() {
     }
   } else {
     digitalWrite(ledPin, LOW);
-    lcd.clear();
-    flag = false;
-  }
-  delay(100); 
-}
+    lc
