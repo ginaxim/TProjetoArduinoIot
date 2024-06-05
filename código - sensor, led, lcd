@@ -1,16 +1,30 @@
 // Codigo apenas com sensor, led, e lcd i2c, faltando o esp32 //
 
-Wire.begin();
-  lcd.begin(16, 2);
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+#define trigPin 9
+#define echoPin 8
+#define ledPin 7
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  Wire.begin();
+  lcd.init(); // Inicializa o LCD
   lcd.backlight();
-  lcd.clear();
+  lcd.clear(); 
+
+  Serial.begin(9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(ledPin, OUTPUT);
 
   Serial.println("Setup completo");
 }
 
 void loop() {
-  long duration;
-  int distance;
+  long duration, distance;
 
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -21,17 +35,16 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
   distance = (duration / 2) / 29.1;
 
-  if (distance > 100) {
+  if (distance > 50) { 
     digitalWrite(ledPin, HIGH);
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Reposicao");
     lcd.setCursor(0, 1);
     lcd.print("Necessaria");
-    if (!flag) {
-      Serial.println("LED acesa. Enviando mensagem...");
-      flag = true;
-    }
   } else {
     digitalWrite(ledPin, LOW);
-    lc
+    lcd.clear();
+  }
+  delay(1000);
+}
