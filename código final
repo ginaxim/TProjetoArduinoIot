@@ -1,5 +1,3 @@
-// Codigo apenas com sensor, led, e lcd i2c, faltando o esp32 //
-
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
